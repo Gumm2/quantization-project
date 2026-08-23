@@ -1,0 +1,20 @@
+PHASE 3 MODEL SUMMARY
+=====================
+
+Shared-scale observations: 17
+
+Group-size power law:
+MSE ≈ 0.001539 × group_size^0.937403
+Log-space R²: 0.996653
+Log-space correlation: 0.998325
+
+Average-scale power law:
+MSE ≈ 0.007759 × average_scale^0.997387
+Log-space R²: 0.992219
+Log-space correlation: 0.996102
+
+Important limitation:
+Group size and average scale are strongly linked by this experimental
+design. A larger R² alone cannot establish that either variable causes
+MSE. Future experiments must vary tensor distributions and outlier
+magnitudes independently.

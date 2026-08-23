@@ -1,0 +1,1 @@
+In TinyLlama's first query-projection layer, most weights cluster near zero, but a tiny fraction (0.0061%) are of extreme magnitude. Because the largest of these outliers is roughly 2.68 times greater than the 99.999th percentile, they can disproportionately skew the quantization scale in global symmetric quantization.

@@ -1,0 +1,42 @@
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Large model files
+models/
+*.gguf
+*.safetensors
+*.bin
+
+# llama.cpp binaries / downloaded runtimes
+llama_cpp_vulkan/
+llama_cpp_binaries/
+llama-vulkan.zip
+*.dll
+*.exe
+
+# ROCm / compiled GPU binaries
+*.hsaco
+*.so
+
+# Graphify generated analysis
+graphify-out/
+
+# IDE / OS junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+llama-bin-windows.zip
+data/wikitext2/wikitext-2-v1.zip
+# Local AI coding-tool configuration
+.claude/
+CLAUDE.md

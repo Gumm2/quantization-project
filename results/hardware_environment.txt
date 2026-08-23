@@ -1,0 +1,16 @@
+Available devices:
+  Vulkan0: AMD Radeon RX 9070 XT (16304 MiB, 15416 MiB free)
+
+--- SYSTEM ---
+
+Name
+----
+AMD Ryzen 9 5900XT 16-Core Processor           
+
+
+
+Name                  DriverVersion
+----                  -------------
+AMD Radeon RX 9070 XT 32.0.31035.1003
+
+

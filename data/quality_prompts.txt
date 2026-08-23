@@ -1,0 +1,8 @@
+What is the capital of France?
+Explain why the sky appears blue in simple terms.
+A train travels 60 miles per hour for 2.5 hours. How far does it travel?
+If all roses are flowers and some flowers fade quickly, can we conclude that some roses fade quickly? Explain.
+Write a short Python function that returns the factorial of a nonnegative integer.
+Summarize this sentence in fewer words: Quantization reduces the precision of numerical values in a model in order to reduce memory usage and potentially improve inference speed.
+What are two advantages and two disadvantages of using lower-precision weights in a neural network?
+A farmer has 17 sheep and all but 9 run away. How many sheep remain?

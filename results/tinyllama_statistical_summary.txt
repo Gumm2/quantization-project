@@ -1,0 +1,45 @@
+TINYLLAMA STATISTICAL ANALYSIS
+======================================================================
+
+PEARSON
+----------------------------------------------------------------------
+
+Target: Global INT4 Zeroed %
+Strongest predictor: max_to_std
+Correlation: 0.755596
+
+Target: Global INT4 MSE
+Strongest predictor: max_abs
+Correlation: 0.708640
+
+Target: Group-64 MSE Improvement
+Strongest predictor: max_to_std
+Correlation: 0.690200
+
+SPEARMAN
+----------------------------------------------------------------------
+
+Target: Global INT4 Zeroed %
+Strongest predictor: max_to_std
+Correlation: 0.998574
+
+Target: Global INT4 MSE
+Strongest predictor: max_abs
+Correlation: 0.853996
+
+Target: Group-64 MSE Improvement
+Strongest predictor: max_to_std
+Correlation: 0.953010
+
+
+MATRIX FAMILY SUMMARY
+======================================================================
+             matrices  mean_std  mean_max_to_std  mean_kurtosis  mean_global_int4_zeroed  mean_global_int4_mse  mean_group64_mse_improvement
+matrix_type                                                                                                                                 
+down_proj          22  0.017468        37.515681       1.065193                98.551697              0.000289                     77.422308
+o_proj             22  0.015236        29.526985       4.451714                94.250302              0.000187                     66.422766
+gate_proj          22  0.020443        26.417538       1.322491                91.194166              0.000306                     60.691922
+q_proj             22  0.025857        21.069705       8.546636                80.748164              0.000287                     32.669572
+up_proj            22  0.017735        18.938246       0.435443                79.915442              0.000168                     44.085995
+k_proj             22  0.044910        14.377464      15.409523                61.772815              0.000383                     13.764151
+v_proj             22  0.014606         7.538731       0.752565                43.256031              0.000028                      7.783289
