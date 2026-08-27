@@ -46,6 +46,7 @@ tensor_size = 1000
 outlier_value = 1000
 max_int = 7  # INT4
 
+torch.manual_seed(0)
 weights = torch.randn(tensor_size)
 weights[0] = outlier_value
 

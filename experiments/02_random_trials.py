@@ -20,6 +20,7 @@ mse4_values = []
 ratio_values = []
 
 for trial in range(num_trials):
+    torch.manual_seed(trial)
     weights = torch.randn(tensor_size)
 
     mse8 = quantize_and_measure(weights, 127)

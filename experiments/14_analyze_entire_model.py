@@ -10,14 +10,14 @@ from safetensors import safe_open
 
 MODEL_ID = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
-# only grabbing q_proj for now because otherwise we would be comparing
-# a bunch of matrices that do different things and have different shapes
+# start with q_proj across all transformer layers so the matrices
+# stay comparable in both role and shape
 TARGET_PATTERN = re.compile(
     r"model\.layers\.(\d+)\.self_attn\.q_proj\.weight"
 )
 
-# 64 seemed like a reasonable practical group size from the earlier experiment
-# small enough to protect weights but not so small that we need a scale for everything
+# use group size 64 based on the earlier group-size experiments
+# as a practical balance between local scaling and scale overhead
 GROUP_SIZE = 64
 
 RESULTS_DIR = Path("results")
@@ -31,15 +31,15 @@ def global_symmetric_quantize(
     """
     One scale for the entire matrix.
 
-    This is basically the most aggressive/simple version and should be
-    especially bad if there is one insane outlier controlling the scale.
+    This is the simplest global version and should be
+    especially bad if there is one extreme outlier controlling the scale.
     """
 
     max_abs = weights.abs().max()
     scale = max_abs / qmax
 
     # there probably will not be a completely zero matrix, but avoiding
-    # division by zero here anyway so the script does not randomly die
+    # avoiding division by zero here so the script does not fail
     if scale.item() == 0:
         scale = torch.tensor(
             1.0,
@@ -53,7 +53,7 @@ def global_symmetric_quantize(
     reconstructed = quantized * scale
     error = weights - reconstructed
 
-    # only counting values that were originally nonzero and got destroyed
+    # only counting values that were originally nonzero and were quantized to zero
     zeroed_values = (
         (weights != 0) & (quantized == 0)
     ).sum().item()
@@ -75,8 +75,8 @@ def grouped_symmetric_int4(
     """
     Split each row into smaller groups and let every group use its own scale.
 
-    The main idea is that one ridiculous value should only ruin its own
-    neighborhood instead of poisoning the entire matrix.
+    The main idea is that one extreme value should only affect its own
+    neighborhood instead of affecting the entire matrix.
     """
 
     if weights.ndim != 2:
@@ -196,7 +196,7 @@ def calculate_layer_statistics(
     max_abs = abs_flat.max()
 
     # this was one of the most useful numbers from layer 0 because it tells
-    # us how absurd the maximum is compared to a typical weight
+    # us how extreme the maximum is compared to a typical weight
     max_to_std = (
         max_abs.item() / std.item()
         if std.item() != 0

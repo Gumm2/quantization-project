@@ -29,7 +29,7 @@ predictors = [
 
 
 # these are the three outcomes I care about for this analysis:
-# how many weights global INT4 destroys, how much numerical error it creates,
+# how many weights global INT4 zeros out, how much numerical error it creates,
 # and how much group-64 improves that error
 targets = {
     "global_int4_zeroed_percent": "Global INT4 Zeroed %",
@@ -90,7 +90,7 @@ all_correlations.to_csv(
 
 
 # print everything instead of only the winner because I want to see
-# whether there are several strong predictors or one obvious standout
+# whether there are several strong predictors or one clear standout
 print("\nPEARSON CORRELATIONS")
 print("=" * 90)
 

@@ -1,5 +1,6 @@
 import torch
 
+torch.manual_seed(0)
 weights = torch.randn(1000)
 
 def quantize_and_measure(weights, max_int):

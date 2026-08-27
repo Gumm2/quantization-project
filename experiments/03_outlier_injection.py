@@ -18,11 +18,14 @@ def quantize_and_measure(weights, max_int):
 tensor_size = 1000
 outlier_values = [0, 5, 10, 50, 100, 500, 1000]
 
-print("Outlier Injection Debug Experiment")
+print("Outlier Injection Experiment")
 print("----------------------------------")
 
+torch.manual_seed(0)
+base_weights = torch.randn(tensor_size)
+
 for outlier in outlier_values:
-    weights = torch.randn(tensor_size)
+    weights = base_weights.clone()
 
     if outlier != 0:
         weights[0] = outlier

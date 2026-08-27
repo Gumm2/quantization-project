@@ -64,7 +64,7 @@ def grouped_symmetric_int4(weights, group_size):
 
     groups_per_row = columns // group_size
 
-    # splitting every row into local neighborhoods so one absurd max
+    # splitting every row into local neighborhoods so one extreme maximum
     # does not get to dictate the scale for everything else
     grouped = weights.reshape(
         rows,

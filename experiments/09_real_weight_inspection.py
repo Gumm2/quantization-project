@@ -12,7 +12,7 @@ RESULTS_DIR = Path("results")
 RESULTS_DIR.mkdir(exist_ok=True)
 
 print("Locating TinyLlama weight files...")
-print("The 2.2 GB model is already downloaded, so it should not download again.\n")
+print("Using the local Hugging Face cache if the model has already been downloaded.\n")
 
 model_directory = Path(
     snapshot_download(
