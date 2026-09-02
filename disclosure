@@ -1,2 +1,3 @@
 ## Documentation Note
-The core logic, experimentation, and hardware benchmarks in this repository were entirely designed and executed by me. To ensure professional clarity, an LLM was utilized solely to assist in formatting the LaTeX mathematical equations and structuring the benchmark markdown tables.
+
+The project design, implementation, experiments, and hardware benchmarks in this repository are my own work. An LLM was used only to help format LaTeX equations and Markdown benchmark tables.
