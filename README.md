@@ -48,7 +48,7 @@ Lower precision aggressively reduced VRAM consumption and scaled token-generatio
 
 The table below reports generation throughput from the 128-token benchmark.
 
-| Quantization | Size (GB) | Generation (128 tokens/s) | Speedup vs. Q8 |
+| Quantization | Size (GB) | Generation Throughput (tokens/s) | Speedup vs. Q8 |
 |---|---:|---:|---:|
 | Q8_0 | 1.169 | 388.5 | — |
 | Q6_K | 0.903 | 464.6 | 19.6% |
