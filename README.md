@@ -14,17 +14,21 @@ This repository isolates the mathematical mechanics of quantization error by tra
 
 Symmetric quantization in this project relies on absolute tensor maximums to isolate baseline error sources. For a floating-point weight tensor $W$, the scale factor ($s$) is derived from the largest absolute weight:
 
-$$ s = \frac{\max(|W|)}{q_{\max}} $$
+$$
+s = \frac{\max(|W|)}{q_{\max}}
+$$
 
-where $q_{\max}=127$ for signed INT8 and $q_{\max}=7$ for signed symmetric INT4. Quantized weights ($q$) are mapped via:
+where $q_{\max}=127$ for signed INT8 and $q_{\max}=7$ for signed symmetric INT4. Quantized weights ($q$) are mapped by dividing each weight by the scale factor and rounding to the nearest integer:
 
-$$ q = \operatorname{round}\left(\frac{W}{s}\right) $$
+$$
+q = \mathrm{round}\left(\frac{W}{s}\right)
+$$
 
 To evaluate precision loss, weights are dequantized ($\hat{W} = q \cdot s$) and evaluated against the original tensor using mean squared error (MSE), while also tracking the rate at which nonzero weights are rounded to zero.
 
 ## The Outlier Problem and Mitigation
 
-Symmetric max-based quantization faces significant precision loss when handling extreme outliers. Because signed INT4 offers only 15 discrete levels (-7 to 7), a single high-magnitude weight stretches the quantization step size (s). This causes sufficiently small non-zero weights to compress and round to zero.
+Symmetric max-based quantization faces significant precision loss when handling extreme outliers. Because signed INT4 offers only 15 discrete levels (-7 to 7), a single high-magnitude weight stretches the quantization step size ($s$). This coarsens the representable levels for lower-magnitude weights, increasing reconstruction error and causing sufficiently small nonzero weights to round to zero.
 
 To mitigate this, this implementation partitions tensors into local blocks (group quantization). Assigning independent scale factors isolates outliers to their specific group, protecting the precision of the surrounding tensor. To isolate the effect of outliers from bit width alone, controlled synthetic experiments injected individual outliers of increasing magnitude while holding the quantization method and bit width fixed.
 
@@ -32,7 +36,7 @@ To mitigate this, this implementation partitions tensors into local blocks (grou
 
 ## Real-Model Validation
 
-The synthetic results were then tested across the linear weight matrices of TinyLlama-1.1B. Global INT4 quantization showed substantial variation between matrix families. Matrices containing more extreme weights relative to their standard deviation generally experienced greater zeroing and benefitted more from localized scaling.
+The synthetic results were then tested across the linear weight matrices of TinyLlama-1.1B. Global INT4 quantization showed substantial variation between matrix families. Matrices containing more extreme weights relative to their standard deviation generally experienced greater zeroing and benefited more from localized scaling.
 
 Across the analyzed matrices, the max-to-standard-deviation ratio was strongly associated with global INT4 zeroing (Spearman ρ = 0.999) and with the MSE improvement obtained using group-64 quantization (ρ = 0.953). This supports the same mechanism observed in the controlled synthetic experiments: extreme values can dominate a shared scale and reduce effective precision for the rest of the tensor.
 
@@ -42,9 +46,9 @@ Across the analyzed matrices, the max-to-standard-deviation ratio was strongly a
 
 ## Hardware Performance
 
-To bridge numerical error rates with real-world execution velocity, end-to-end inference was benchmarked locally using GGUF quantizations of TinyLlama-1.1B on an AMD Radeon RX 9070 XT (RDNA 4 architecture).
+To connect numerical error with real-world execution performance, end-to-end inference was benchmarked locally using GGUF quantizations of TinyLlama-1.1B on an AMD Radeon RX 9070 XT (RDNA 4 architecture).
 
-Lower precision aggressively reduced VRAM consumption and scaled token-generation throughput. However, prompt-processing (prefill) latency did not scale monotonically with smaller quantization steps, indicating reduced model size does not necessarily result in proportional performance gains. 
+Lower precision reduced model size and increased token-generation throughput in these benchmarks. However, prompt-processing (prefill) performance did not scale monotonically with lower precision, demonstrating that reduced model size does not necessarily translate directly into proportional end-to-end performance gains.
 
 | Quantization | Size (GB) | Generation (128 tokens/s) | Speedup vs. Q8 |
 |---|---:|---:|---:|
@@ -54,4 +58,3 @@ Lower precision aggressively reduced VRAM consumption and scaled token-generatio
 | Q4_K_M | 0.667 | 529.8 | 36.4% |
 
 ![GPU generation throughput](results/gpu_generation_throughput_by_quantization.png)
-
