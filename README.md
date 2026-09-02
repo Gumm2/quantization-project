@@ -24,7 +24,7 @@ To evaluate precision loss, weights are dequantized ($\hat{W} = q \cdot s$) and 
 
 ## The Outlier Problem and Mitigation
 
-Symmetric max-based quantization faces significant precision loss when handling extreme outliers. Because signed INT4 offers only 15 discrete levels (-7 to 7), a single high-magnitude weight can increase the scale factor for the entire tensor. Smaller nonzero weights are then mapped onto a coarser grid, causing more of them to round to zero.
+The primary drawback of symmetric max-based quantization is its sensitivity to extreme outliers, which causes severe precision loss. Because signed INT4 offers only 15 discrete levels (-7 to 7), a single high-magnitude weight can increase the scale factor for the entire tensor. Smaller nonzero weights are then mapped onto a coarser grid, causing more of them to round to zero.
 
 To mitigate this, this implementation partitions tensors into local blocks **(group quantization).** Assigning independent scale factors confines an outlier's effect to its group rather than allowing it to determine the scale of the full tensor. To isolate the effect of outliers from bit width alone, controlled synthetic experiments injected individual outliers of increasing magnitude while holding the quantization method and bit width fixed.
 
