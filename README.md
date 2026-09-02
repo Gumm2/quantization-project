@@ -46,6 +46,8 @@ To bridge numerical error rates with real-world execution velocity, end-to-end i
 
 Lower precision aggressively reduced VRAM consumption and scaled token-generation throughput. However, prompt-processing (prefill) latency did not scale monotonically with smaller quantization steps, indicating reduced model size does not necessarily result in proportional performance gains. 
 
+The table below reports generation throughput from the 128-token benchmark.
+
 | Quantization | Size (GB) | Generation (128 tokens/s) | Speedup vs. Q8 |
 |---|---:|---:|---:|
 | Q8_0 | 1.169 | 388.5 | — |
